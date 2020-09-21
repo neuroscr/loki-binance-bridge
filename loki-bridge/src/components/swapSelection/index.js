@@ -6,24 +6,53 @@ import { Input, Button, Select } from '@components';
 import { SWAP_TYPE, TYPE } from '@constants';
 import config from '@config';
 import styles from './styles';
+import Web3 from 'web3';
 
 const walletCreationUrl = {
   [TYPE.LOKI]: config.loki.walletCreationUrl,
-  [TYPE.BNB]: config.binance.walletCreationUrl,
+  [TYPE.WLOKI]: config.wloki.walletCreationUrl,
 };
+
+const ethEnabled = () => {
+  if (window.web3) {
+    window.web3 = new Web3(window.web3.currentProvider);
+    window.ethereum.enable();
+    return true;
+  }
+  return false;
+}
 
 class SwapSelection extends Component {
   state = {
     address: '',
     addressError: false,
     options: [{
-      value: SWAP_TYPE.LOKI_TO_BLOKI,
-      description: 'LOKI to B-LOKI',
+      value: SWAP_TYPE.LOKI_TO_WLOKI,
+      description: 'LOKI to WLOKI',
     }, {
-      value: SWAP_TYPE.BLOKI_TO_LOKI,
-      description: 'B-LOKI to LOKI',
+      value: SWAP_TYPE.WLOKI_TO_LOKI,
+      description: 'WLOKI to LOKI',
     }],
   };
+
+  constructor() {
+    super();
+    // the default props.swapType is SWAP_TYPE.LOKI_TO_WLOKI
+    this.setAccountFromMetaMask();
+  }
+
+  setAccountFromMetaMask = () => {
+    const ethReady = ethEnabled()
+    console.log('metamask enabled', ethReady)
+    if (ethReady) {
+      window.web3.eth.getAccounts().then(accounts => {
+        // if we have an account, go ahead and set it
+        if (accounts.length) {
+          this.setState({ address: accounts[0]})
+        }
+      })
+    }
+  }
 
   onNext = () => {
     const { address } = this.state;
@@ -41,11 +70,17 @@ class SwapSelection extends Component {
 
   onSwapTypeChanged = (event) => {
     this.props.onSwapTypeChanged(event.target.value);
+    if (event.target.value === SWAP_TYPE.LOKI_TO_WLOKI) {
+      this.setAccountFromMetaMask();
+    } else {
+      // just clear it
+      this.setState({ address: '' })
+    }
   }
 
   getAddressType = () => {
     const { swapType } = this.props;
-    return swapType === SWAP_TYPE.LOKI_TO_BLOKI ? TYPE.BNB : TYPE.LOKI;
+    return swapType === SWAP_TYPE.LOKI_TO_WLOKI ? TYPE.WLOKI : TYPE.LOKI;
   }
 
   render() {
@@ -53,8 +88,8 @@ class SwapSelection extends Component {
     const { options, address, addressError } = this.state;
 
     const addressType = this.getAddressType();
-    const inputLabel = addressType === TYPE.LOKI ? 'Loki Address' : 'BNB Address';
-    const inputPlaceholder = addressType === TYPE.LOKI ? 'L...' : 'bnb...';
+    const inputLabel = addressType === TYPE.LOKI ? 'Loki Destination Address' : 'ETH Destination Address';
+    const inputPlaceholder = addressType === TYPE.LOKI ? 'L...' : '0x...';
 
     const url = walletCreationUrl[addressType];
 
