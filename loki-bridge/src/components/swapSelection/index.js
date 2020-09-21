@@ -13,10 +13,12 @@ const walletCreationUrl = {
   [TYPE.WLOKI]: config.wloki.walletCreationUrl,
 };
 
-
+// https://medium.com/@awantoch/how-to-connect-web3-js-to-metamask-in-2020-fee2b2edf58a
 const ethEnabled = () => {
-  if (window.web3) {
-    window.web3 = new Web3(window.web3.currentProvider);
+  // check to see if MetaMask is installed
+  if (window.ethereum) {
+    //window.web3 = new Web3(window.web3.currentProvider);
+    window.web3 = new Web3(window.ethereum)
     window.ethereum.enable();
     return true;
   }
@@ -38,8 +40,11 @@ class SwapSelection extends Component {
 
   constructor() {
     super();
-    // the default props.swapType is SWAP_TYPE.LOKI_TO_WLOKI
-    this.setAccountFromMetaMask();
+    // if the first option value is SWAP_TYPE.LOKI_TO_WLOKI
+    if (this.state.options && this.state.options.length &&
+        this.state.options[0].value === SWAP_TYPE.LOKI_TO_WLOKI) {
+      this.setAccountFromMetaMask();
+    }
   }
 
   setAccountFromMetaMask = () => {
@@ -51,6 +56,7 @@ class SwapSelection extends Component {
           this.setState({ address: accounts[0]})
         }
       })
+      // https://medium.com/better-programming/how-to-detect-when-a-user-changes-their-metamask-account-4611845b6415
       // handle registration with metamask and any changes in it
       window.ethereum.on('accountsChanged', (accounts) => {
         // if we have an account, go ahead and set it
