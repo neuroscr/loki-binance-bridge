@@ -1,9 +1,9 @@
 export const TYPE = {
   LOKI: 'loki',
-  BNB: 'bnb',
+  WLOKI: 'wloki',
 };
 
 export const SWAP_TYPE = {
-  LOKI_TO_BLOKI: 'loki_to_bloki',
-  BLOKI_TO_LOKI: 'bloki_to_loki',
+  LOKI_TO_WLOKI: 'loki_to_wloki',
+  WLOKI_TO_LOKI: 'wloki_to_loki',
 };
