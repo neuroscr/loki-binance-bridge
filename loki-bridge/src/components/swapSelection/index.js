@@ -15,6 +15,7 @@ const walletCreationUrl = {
 
 // https://medium.com/@awantoch/how-to-connect-web3-js-to-metamask-in-2020-fee2b2edf58a
 const ethEnabled = () => {
+  // window.ethereum will be undefined
   // check to see if MetaMask is installed
   if (window.ethereum) {
     //window.web3 = new Web3(window.web3.currentProvider);
@@ -105,7 +106,7 @@ class SwapSelection extends Component {
 
     const addressType = this.getAddressType();
     const inputLabel = addressType === TYPE.LOKI ? 'Loki Destination Address' : 'ETH Destination Address';
-    const inputPlaceholder = addressType === TYPE.LOKI ? 'L...' : '0x...';
+    const inputPlaceholder = addressType === TYPE.LOKI ? 'L...' : '0x... or reload with MetaMask';
 
     const url = walletCreationUrl[addressType];
 
