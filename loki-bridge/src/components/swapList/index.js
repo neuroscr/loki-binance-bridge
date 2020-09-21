@@ -10,7 +10,7 @@ import styles from './styles';
 
 const hashUrls = {
   [TYPE.LOKI]: config.loki.txExplorerUrl,
-  [TYPE.BNB]: config.binance.txExplorerUrl,
+  [TYPE.WLOKI]: config.wloki.txExplorerUrl,
 };
 
 class SwapList extends Component {
@@ -18,8 +18,8 @@ class SwapList extends Component {
     const { classes } = this.props;
 
     const hasTransferHashes = transferTxHashes.length > 0;
-    const depositHashType = type === SWAP_TYPE.LOKI_TO_BLOKI ? TYPE.LOKI : TYPE.BNB;
-    const transferHashType = type === SWAP_TYPE.LOKI_TO_BLOKI ? TYPE.BNB : TYPE.LOKI;
+    const depositHashType = type === SWAP_TYPE.LOKI_TO_WLOKI ? TYPE.LOKI : TYPE.WLOKI;
+    const transferHashType = type === SWAP_TYPE.LOKI_TO_WLOKI ? TYPE.WLOKI : TYPE.LOKI;
     const hashType = hasTransferHashes ? transferHashType : depositHashType;
     const baseUrl = hashUrls[hashType];
 
@@ -75,7 +75,7 @@ class SwapList extends Component {
     const { classes } = this.props;
 
     const isPending = transferTxHashes && transferTxHashes.length === 0;
-    const depositCurrency = type === SWAP_TYPE.LOKI_TO_BLOKI ? 'LOKI' : 'B-LOKI';
+    const depositCurrency = type === SWAP_TYPE.LOKI_TO_WLOKI ? 'LOKI' : 'WLOKI';
     const displayAmount = amount / 1e9;
 
     let status = 'Completed';

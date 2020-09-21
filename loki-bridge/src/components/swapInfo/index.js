@@ -111,7 +111,7 @@ class SwapInfo extends PureComponent {
     const { swapType, classes, swapInfo } = this.props;
 
     const { depositAddress } = swapInfo;
-    const depositCurrency = swapType === SWAP_TYPE.LOKI_TO_BLOKI ? 'LOKI' : 'B-LOKI';
+    const depositCurrency = swapType === SWAP_TYPE.LOKI_TO_WLOKI ? 'LOKI' : 'WLOKI';
 
     return (
       <React.Fragment>
@@ -155,12 +155,12 @@ class SwapInfo extends PureComponent {
             Here's what you need to do next:
         </Typography>
         {this.renderDepositInstructions()}
-        { swapType === SWAP_TYPE.LOKI_TO_BLOKI && (
+        { swapType === SWAP_TYPE.LOKI_TO_WLOKI && (
           <Typography className={ classes.instructions }>
             <b>Note:</b> You will have to wait for there to be atleast {lokiConfirmations} confirmations before your added to our processing queue.
           </Typography>
         )}
-        { swapType === SWAP_TYPE.BLOKI_TO_LOKI && (
+        { swapType === SWAP_TYPE.WLOKI_TO_LOKI && (
           <Typography className={ classes.instructionBold }>
               There will be a processing fee of {lokiFee} LOKI which will be charged when processing all your pending swaps.
           </Typography>
@@ -176,7 +176,7 @@ class SwapInfo extends PureComponent {
     const { classes, swapType, swapInfo } = this.props;
     if (!swapInfo || !swapInfo.swaps || swapInfo.swaps.length === 0) return null;
 
-    const receivingCurrency = swapType === SWAP_TYPE.LOKI_TO_BLOKI ? 'B-LOKI' : 'LOKI';
+    const receivingCurrency = swapType === SWAP_TYPE.LOKI_TO_WLOKI ? 'WLOKI' : 'LOKI';
 
     const pendingSwaps = swapInfo.swaps.filter(s => s.transferTxHashes && s.transferTxHashes.length === 0);
     const total = pendingSwaps.reduce((total, swap) => total + parseFloat(swap.amount), 0);
