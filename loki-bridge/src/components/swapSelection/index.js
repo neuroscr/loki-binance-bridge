@@ -13,6 +13,7 @@ const walletCreationUrl = {
   [TYPE.WLOKI]: config.wloki.walletCreationUrl,
 };
 
+
 const ethEnabled = () => {
   if (window.web3) {
     window.web3 = new Web3(window.web3.currentProvider);
@@ -43,12 +44,21 @@ class SwapSelection extends Component {
 
   setAccountFromMetaMask = () => {
     const ethReady = ethEnabled()
-    console.log('metamask enabled', ethReady)
     if (ethReady) {
       window.web3.eth.getAccounts().then(accounts => {
         // if we have an account, go ahead and set it
         if (accounts.length) {
           this.setState({ address: accounts[0]})
+        }
+      })
+      // handle registration with metamask and any changes in it
+      window.ethereum.on('accountsChanged', (accounts) => {
+        // if we have an account, go ahead and set it
+        if (accounts.length) {
+          // don't stomp a loki address
+          if (this.props.swapType === SWAP_TYPE.LOKI_TO_WLOKI) {
+            this.setState({ address: accounts[0]})
+          }
         }
       })
     }
