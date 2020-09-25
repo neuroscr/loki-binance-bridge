@@ -1,4 +1,4 @@
-import Button from './button';
+import LokiButton from './lokibutton';
 import Checkbox from './checkbox';
 import Snackbar from './snackbar';
 import Input from './input';
@@ -10,10 +10,15 @@ import Swap from './swap';
 import SwapInfo from './swapInfo';
 import SwapSelection from './swapSelection';
 import SwapList from './swapList';
+import SwapWrapper from './swapWrapper';
+import About from './about';
+import ToS from './tos';
 import ImageLoader from './imageLoader';
+import Header from './Header';
+import Web3Status from './Web3Status';
 
 export {
-  Button,
+  LokiButton,
   Checkbox,
   Snackbar,
   Input,
@@ -25,5 +30,10 @@ export {
   SwapInfo,
   SwapSelection,
   SwapList,
-  ImageLoader
+  SwapWrapper,
+  About,
+  ToS,
+  ImageLoader,
+  Header,
+  Web3Status
 };
