@@ -1,0 +1,13 @@
+"use strict";
+exports.__esModule = true;
+exports.removeSerializedPair = exports.addSerializedPair = exports.removeSerializedToken = exports.addSerializedToken = exports.updateUserDeadline = exports.updateUserSlippageTolerance = exports.updateUserExpertMode = exports.updateUserDarkMode = exports.updateMatchesDarkMode = void 0;
+var toolkit_1 = require("@reduxjs/toolkit");
+exports.updateMatchesDarkMode = toolkit_1.createAction('user/updateMatchesDarkMode');
+exports.updateUserDarkMode = toolkit_1.createAction('user/updateUserDarkMode');
+exports.updateUserExpertMode = toolkit_1.createAction('user/updateUserExpertMode');
+exports.updateUserSlippageTolerance = toolkit_1.createAction('user/updateUserSlippageTolerance');
+exports.updateUserDeadline = toolkit_1.createAction('user/updateUserDeadline');
+exports.addSerializedToken = toolkit_1.createAction('user/addSerializedToken');
+exports.removeSerializedToken = toolkit_1.createAction('user/removeSerializedToken');
+exports.addSerializedPair = toolkit_1.createAction('user/addSerializedPair');
+exports.removeSerializedPair = toolkit_1.createAction('user/removeSerializedPair');
