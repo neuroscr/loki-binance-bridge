@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Typography, Box } from '@material-ui/core';
-import { Warning } from '@utils/error';
-import { store, dispatcher, Actions, Events } from '@store';
-import { SWAP_TYPE, TYPE } from '@constants';
-import { SwapSelection, SwapInfo, SwapList } from '@components';
+import { Warning } from 'utils/error';
+import { store, dispatcher, Actions, Events } from 'store';
+import { SWAP_TYPE, TYPE } from 'utils/constants.js';
+import { SwapSelection, SwapInfo, SwapList } from 'components';
 import styles from './styles';
 
 const currencySymbols = {

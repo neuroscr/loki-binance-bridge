@@ -1,4 +1,4 @@
-import { colors, common } from '@theme';
+import { colors, common } from 'theme';
 
 const styles = theme => ({
   root: {

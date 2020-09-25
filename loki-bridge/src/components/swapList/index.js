@@ -4,8 +4,8 @@ import TimeAgo from 'timeago-react';
 import dateformat from 'dateformat';
 import { Grid, Typography, Box, Divider, Link } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import config from '@config';
-import { SWAP_TYPE, TYPE } from '@constants';
+import config from 'config';
+import { SWAP_TYPE, TYPE } from 'utils/constants.js';
 import styles from './styles';
 
 const hashUrls = {

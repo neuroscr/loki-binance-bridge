@@ -1,5 +1,5 @@
 import { amber, green } from '@material-ui/core/colors';
-import { colors } from '@theme';
+import { colors } from 'theme';
 
 const styles = theme => ({
   success: {

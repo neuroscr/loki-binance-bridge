@@ -5,8 +5,8 @@ import AnimateHeight from 'react-animate-height';
 import { Grid, Typography, IconButton, Link, Tooltip, Box } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { FileCopyOutlined as CopyIcon } from '@material-ui/icons';
-import { Button, QRIcon } from '@components';
-import { SWAP_TYPE } from '@constants';
+import { LokiButton, QRIcon } from 'components';
+import { SWAP_TYPE } from 'utils/constants.js';
 import styles from './styles';
 
 class SwapInfo extends PureComponent {
@@ -204,7 +204,7 @@ class SwapInfo extends PureComponent {
         </Grid>
         {this.renderInstructions()}
         <Grid item xs={12} className={classes.button}>
-          <Button
+          <LokiButton
             fullWidth
             label="Refresh"
             loading={loading}

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Typography, Link } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { Input, Button, Select } from '@components';
-import { SWAP_TYPE, TYPE } from '@constants';
-import config from '@config';
+import { Input, LokiButton, Select } from 'components';
+import { SWAP_TYPE, TYPE } from 'utils/constants.js';
+import config from 'config';
 import styles from './styles';
 import Web3 from 'web3';
 
@@ -138,7 +138,7 @@ class SwapSelection extends Component {
           </Typography>
         </Grid>
         <Grid item xs={ 12 } align='right' className={ classes.button }>
-          <Button
+          <LokiButton
             fullWidth
             label="Next"
             loading={loading}
