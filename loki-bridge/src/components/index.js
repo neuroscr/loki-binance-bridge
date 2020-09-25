@@ -11,8 +11,6 @@ import SwapInfo from './swapInfo';
 import SwapSelection from './swapSelection';
 import SwapList from './swapList';
 import SwapWrapper from './swapWrapper';
-import About from './about';
-import ToS from './tos';
 import ImageLoader from './imageLoader';
 import Header from './Header';
 import Web3Status from './Web3Status';
@@ -31,8 +29,6 @@ export {
   SwapSelection,
   SwapList,
   SwapWrapper,
-  About,
-  ToS,
   ImageLoader,
   Header,
   Web3Status

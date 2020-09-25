@@ -4,7 +4,10 @@ import LazyLoad from 'react-lazy-load';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { Grid, Box } from '@material-ui/core';
-import { Snackbar, About, Swap, ImageLoader, SwapWrapper, Web3Status, ToS } from 'components';
+import { Snackbar,  Swap, ImageLoader, SwapWrapper, Web3Status } from 'components';
+import About from 'pages/about';
+import ToS from 'pages/tos';
+import Staking from 'pages/staking';
 import theme from 'theme/loki.js';
 // from uniswap
 import { Provider } from 'react-redux'
@@ -119,14 +122,19 @@ export default class App extends PureComponent {
             {this.renderBackgroundImage()}
             <Web3ReactManager>
               <div id="content">
+                <p></p>
+                <p></p>
+                <Link to="/">About wLoki</Link>
+                <Link to="/swap">Swap</Link>
+                <Link to="/staking">Staking</Link>
                 <Switch>
                   <Route exact strict path="/swap" component={SwapWrapper} />
                   <Route exact strict path="/tos" component={ToS} />
+                  <Route exact strict path="/staking" component={Staking} />
                   <Route component={About} />
                 </Switch>
-                <Link to="/">About wLoki</Link>
-                <Link to="/swap">Swap</Link>
-                <Link to="/tos">TOS</Link>
+                <Link to="/tos">terms of service</Link>
+                Copyright 2020 Alchemy Luxe
               </div>
             </Web3ReactManager>
 
