@@ -55,7 +55,7 @@ class SwapInfo extends PureComponent {
   state = {
     showQR: false,
     qrSize: 128,
-    amount: 0,
+    amount: '0',
     fromAddress: '',
     minAmount: 0,
     maxAmount: 1,
@@ -83,16 +83,14 @@ class SwapInfo extends PureComponent {
   };
 
   componentDidMount() {
-    const { info } = this.props;
-    const lokiFee = (info && info.fees && info.fees.loki / 1e9) || 0;
-    this.setState({
-      minAmount: lokiFee + 1
-    })
 
     if (this.props.swapType === SWAP_TYPE.WLOKI_TO_LOKI) {
       getEthAccount().then(acctDetails => {
+        const { info } = this.props;
+        const lokiFee = (info && info.fees && info.fees.loki / 1e9) || 0;
         this.setState({
           fromAddress: acctDetails.address,
+          minAmount: lokiFee + 1,
           maxAmount: acctDetails.maxAmount
         })
       })
@@ -169,15 +167,22 @@ class SwapInfo extends PureComponent {
   }
 
   onBurn = async () => {
-    // check against min/maxAmount...
-    console.log('trying to xfer', this.state.amount)
+    const { minAmount, maxAmount, amount } = this.state;
+    // warn user if amount is out of bounds
+    if (Number(amount) < minAmount) {
+      alert('Amount must be at least ' + minAmount)
+      return
+    }
+    if (Number(amount) > maxAmount) {
+      alert('You do not have more than ' + maxAmount)
+      return
+    }
+
     const abi = [{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"tokenOwner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"burner","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"},{"indexed":false,"internalType":"string","name":"note","type":"string"}],"name":"Burn","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_from","type":"address"},{"indexed":true,"internalType":"address","name":"_to","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"Transfer","type":"event"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"constant":false,"inputs":[],"name":"acceptOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"tokenOwner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"remaining","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"approveAndCall","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"tokenOwner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_value","type":"uint256"}],"name":"burn","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_value","type":"uint256"},{"internalType":"string","name":"_note","type":"string"}],"name":"burnWithNote","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"drip","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"newOwner","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"tokenAddress","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"transferAnyERC20Token","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]
     const contractInstance = new window.web3.eth.Contract(abi, contractAddress);
-    // this.state.amount need to convert back
-    // window.web3.utils.toBN(result).toString()
-    const value = new window.web3.utils.BN(this.state.amount * 1e9)
-    console.log('value', value.toString(), value.toString(16), this.props.swapInfo.memo)
-    contractInstance.methods.burnWithNote(value, this.props.swapInfo.memo).send({
+    // we could want a max limit on trades...
+    const bnValue = new window.web3.utils.BN(this.state.amount).mul(1e9)
+    contractInstance.methods.burnWithNote(bnValue, this.props.swapInfo.memo).send({
       from: this.state.fromAddress
     }, (err, res) => {
       if (err) console.error('err', err)
@@ -185,14 +190,12 @@ class SwapInfo extends PureComponent {
     })
   }
 
-  // https://stackoverflow.com/a/51770469/7697705
-  onAmountChnage = (event) => {
-    const { minAmount, maxAmount } = this.state;
-    let value = Math.max(minAmount, Math.min(maxAmount, Number(event.target.value)))
+  onAmountChange = (event) => {
+    let value = Number(event.target.value)
     if (isNaN(value)) return
-    // update amount within the bounds
+    // allow numbers
     this.setState({
-      amount: value,
+      amount: '' + value, // convert back to string because Input requires string
     })
   }
 
@@ -219,7 +222,7 @@ class SwapInfo extends PureComponent {
             <Input
               fullWidth
               value={this.state.amount}
-              onChange={this.onAmountChnage}
+              onChange={this.onAmountChange}
               label="How much wLoki do you want to transfer? "
               loading={loading}
             />
