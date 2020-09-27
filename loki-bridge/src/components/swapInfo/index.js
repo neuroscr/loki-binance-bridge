@@ -1,18 +1,64 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent  } from 'react';
 import PropTypes from 'prop-types';
 import QRCode from 'qrcode.react';
 import AnimateHeight from 'react-animate-height';
 import { Grid, Typography, IconButton, Link, Tooltip, Box } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { FileCopyOutlined as CopyIcon } from '@material-ui/icons';
-import { LokiButton, QRIcon } from 'components';
+import { LokiButton, QRIcon, Input } from 'components';
 import { SWAP_TYPE } from 'utils/constants.js';
 import styles from './styles';
+import Web3 from 'web3';
+
+const contractAddress = '0x1c37da7b6d7b428e8ac27187b0f8ebb9461d993a'
+
+const getEthAccount = async () => {
+  // check to see if MetaMask is installed
+  if (window.ethereum && window.web3) {
+    const accounts = await window.ethereum.send('eth_requestAccounts')
+    if (!accounts.result) return false;
+    const addr = accounts.result[0];
+    const tknAddress = (addr).substring(2);
+    // balanceOf in hex...
+    const contractData = ('0x70a08231000000000000000000000000' + tknAddress);
+    const maxAmount = await new Promise(resolve => {
+      window.web3.eth.call({
+        to: contractAddress,
+        data: contractData,
+      }, (err, result) => {
+        if (err) console.error('err', err)
+        const tokens = window.web3.utils.toBN(result).toString(); // Convert the result to a usable number string
+        resolve(tokens / 1e9)
+      })
+    })
+    return {
+      address: addr,
+      maxAmount
+    }
+  }
+  return false;
+}
+
+// https://medium.com/@awantoch/how-to-connect-web3-js-to-metamask-in-2020-fee2b2edf58a
+const ethEnabled = () => {
+  // check to see if MetaMask is installed
+  if (window.ethereum) {
+    //window.web3 = new Web3(window.web3.currentProvider);
+    window.web3 = new Web3(window.ethereum)
+    window.ethereum.enable();
+    return true;
+  }
+  return false;
+}
 
 class SwapInfo extends PureComponent {
   state = {
     showQR: false,
     qrSize: 128,
+    amount: 0,
+    fromAddress: '',
+    minAmount: 0,
+    maxAmount: 1,
   };
 
   onCopy = (id) => {
@@ -37,8 +83,23 @@ class SwapInfo extends PureComponent {
   };
 
   componentDidMount() {
+    const { info } = this.props;
+    const lokiFee = (info && info.fees && info.fees.loki / 1e9) || 0;
+    this.setState({
+      minAmount: lokiFee + 1
+    })
+
+    if (this.props.swapType === SWAP_TYPE.WLOKI_TO_LOKI) {
+      getEthAccount().then(acctDetails => {
+        this.setState({
+          fromAddress: acctDetails.address,
+          maxAmount: acctDetails.maxAmount
+        })
+      })
+    }
+
     // Run a timer every 10 seconds to refresh
-    this.timer = setInterval(this.props.onRefresh, 2 * 60 * 1000);
+    //this.timer = setInterval(this.props.onRefresh, 2 * 60 * 1000);
 
     this.onResize();
     window.addEventListener('resize', this.onResize);
@@ -107,11 +168,71 @@ class SwapInfo extends PureComponent {
     );
   }
 
+  onBurn = async () => {
+    // check against min/maxAmount...
+    console.log('trying to xfer', this.state.amount)
+    const abi = [{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"tokenOwner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"burner","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"},{"indexed":false,"internalType":"string","name":"note","type":"string"}],"name":"Burn","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"_from","type":"address"},{"indexed":true,"internalType":"address","name":"_to","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"Transfer","type":"event"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"constant":false,"inputs":[],"name":"acceptOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"tokenOwner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"remaining","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"approveAndCall","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"internalType":"address","name":"tokenOwner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_value","type":"uint256"}],"name":"burn","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"uint256","name":"_value","type":"uint256"},{"internalType":"string","name":"_note","type":"string"}],"name":"burnWithNote","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"drip","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"newOwner","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"tokenAddress","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"transferAnyERC20Token","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokens","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"internalType":"address","name":"_newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]
+    const contractInstance = new window.web3.eth.Contract(abi, contractAddress);
+    // this.state.amount need to convert back
+    // window.web3.utils.toBN(result).toString()
+    const value = new window.web3.utils.BN(this.state.amount * 1e9)
+    console.log('value', value.toString(), value.toString(16), this.props.swapInfo.memo)
+    contractInstance.methods.burnWithNote(value, this.props.swapInfo.memo).send({
+      from: this.state.fromAddress
+    }, (err, res) => {
+      if (err) console.error('err', err)
+      console.log('burn res', res)
+    })
+  }
+
+  // https://stackoverflow.com/a/51770469/7697705
+  onAmountChnage = (event) => {
+    const { minAmount, maxAmount } = this.state;
+    let value = Math.max(minAmount, Math.min(maxAmount, Number(event.target.value)))
+    if (isNaN(value)) return
+    // update amount within the bounds
+    this.setState({
+      amount: value,
+    })
+  }
+
   renderDepositInstructions = () => {
     const { swapType, classes, swapInfo } = this.props;
 
     const { depositAddress } = swapInfo;
     const depositCurrency = swapType === SWAP_TYPE.LOKI_TO_WLOKI ? 'LOKI' : 'WLOKI';
+
+    if (swapType === SWAP_TYPE.WLOKI_TO_LOKI) {
+      if (!ethEnabled()) {
+        return (
+          <React.Fragment>
+            <Typography className={ classes.instructionBold }>
+                Please connect your web3-enabled wallet
+            </Typography>
+          </React.Fragment>
+        )
+      }
+      const { loading } = this.props;
+      return (
+        <React.Fragment>
+          <Box className={classes.memoFrame}>
+            <Input
+              fullWidth
+              value={this.state.amount}
+              onChange={this.onAmountChnage}
+              label="How much wLoki do you want to transfer? "
+              loading={loading}
+            />
+            <LokiButton
+              fullWidth
+              label="Send"
+              loading={loading}
+              onClick={this.onBurn}
+            />
+          </Box>
+        </React.Fragment>
+      )
+    }
 
     return (
       <React.Fragment>
