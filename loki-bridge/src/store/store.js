@@ -15,7 +15,7 @@ const endpoints = {
   getUncomfirmedLokiTransactions: '/api/v1/getUncomfirmedLokiTransactions',
   getSwaps: '/api/v1/getSwaps',
   swap: '/api/v1/swap',
-  finalizeSwap: '/api/v1/finalizeSwap',
+  finalizeSwap: '/api/v1/refresh',
   createBNBAccount: '/api/v1/createBNBAccount',
   downloadBNBKeystore: '/api/v1/downloadBNBKeystore',
 };
