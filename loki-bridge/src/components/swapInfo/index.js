@@ -38,7 +38,7 @@ class SwapInfo extends PureComponent {
 
   componentDidMount() {
     // Run a timer every 10 seconds to refresh
-    this.timer = setInterval(this.props.onRefresh, 30 * 1000);
+    this.timer = setInterval(this.props.onRefresh, 2 * 60 * 1000);
 
     this.onResize();
     window.addEventListener('resize', this.onResize);
