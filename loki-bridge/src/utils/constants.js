@@ -4,6 +4,6 @@ export const TYPE = {
 };
 
 export const SWAP_TYPE = {
-  LOKI_TO_WLOKI: 'loki_to_wloki',
-  WLOKI_TO_LOKI: 'wloki_to_loki',
+  LOKI_TO_WLOKI: 'loki_to_eth',
+  WLOKI_TO_LOKI: 'eth_to_loki',
 };
