@@ -47,7 +47,7 @@ class SwapWrapper extends Component {
     return (
       <Box display="flex" justifyContent="center" className="title">
         <LazyLoad height={'120px'} className="titleContainer">
-          <ImageLoader className="titleImage" loadedClassName="titleImageLoaded" src="/images/logo.png" alt="Logo" />
+          <ImageLoader className="titleImage" loadedClassName="titleImageLoaded" src="/images/WLOKI_white.svg" alt="Logo" />
         </LazyLoad>
       </Box>
     );
@@ -62,20 +62,17 @@ class SwapWrapper extends Component {
         <HeaderWrapper>
           <Header />
         </HeaderWrapper>
-        <div id="content">
-          {this.renderTitleImage()}
-          <Grid
-            id="grid"
-            container
-            justify="center"
-            alignItems="center"
-          >
-            <Grid item l={6}>
-              <Swap showMessage={this.showMessage} />
-              { this.renderSnackbar() }
-            </Grid>
+        <Grid
+          id="grid"
+          container
+          justify="center"
+          alignItems="center"
+        >
+          <Grid item l={6}>
+            <Swap showMessage={this.showMessage} />
+            { this.renderSnackbar() }
           </Grid>
-        </div>
+        </Grid>
       </div>
     );
   };
