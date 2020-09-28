@@ -4,7 +4,7 @@ import LazyLoad from 'react-lazy-load';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { Grid, Box } from '@material-ui/core';
-import { Snackbar,  Swap, ImageLoader, SwapWrapper, Web3Status } from 'components';
+import { Snackbar,  Swap, ImageLoader, SwapWrapper, LokiButton, Web3Status } from 'components';
 import About from 'pages/about';
 import ToS from 'pages/tos';
 import Staking from 'pages/staking';
@@ -19,7 +19,7 @@ import getLibrary from './utils/getLibrary'
 import styled from 'styled-components'
 import Header from 'components/Header'
 import ThemeProvider, { FixedGlobalStyle, ThemedGlobalStyle } from './theme'
-import { HashRouter, Route, Switch, Link } from 'react-router-dom'
+import { HashRouter, Route, Switch, Link, NavLink } from 'react-router-dom'
 import Web3ReactManager from 'components/Web3ReactManager'
 
 /*
@@ -91,7 +91,7 @@ export default class App extends PureComponent {
     return (
       <div id="background">
         <LazyLoad height={'100%'}>
-          <ImageLoader className="backgroundImage" loadedClassName="backgroundImageLoaded" src="/images/background.png" alt="Background" />
+          <ImageLoader className="backgroundImage" loadedClassName="backgroundImageLoaded" src="/images/chainflip_bg.png" alt="Background" />
         </LazyLoad>
       </div>
     );
@@ -101,7 +101,7 @@ export default class App extends PureComponent {
     return (
       <Box display="flex" justifyContent="center" className="title">
         <LazyLoad height={'120px'} className="titleContainer">
-          <ImageLoader className="titleImage" loadedClassName="titleImageLoaded" src="/images/logo.png" alt="Logo" />
+          <ImageLoader className="titleImage" loadedClassName="titleImageLoaded" src="/images/WLOKI_white.svg" alt="Logo" />
         </LazyLoad>
       </Box>
     );
@@ -124,9 +124,35 @@ export default class App extends PureComponent {
               <div id="content">
                 <p></p>
                 <p></p>
-                <Link to="/">About wLoki</Link>
-                <Link to="/swap">Swap</Link>
-                <Link to="/staking">Staking</Link>
+                <Grid
+                  container
+                  justify="center"
+                  alignItems="center"
+                >
+                  <Grid item xs={ 2 } align="center">
+                    <NavLink to="/"><LokiButton
+                      label="About"
+                      to="/"
+                    /></NavLink>
+                  </Grid>
+                  <Grid item xs={ 2 } align="center">
+                    <NavLink to="/swap">
+                      <LokiButton
+                        label="Swap"
+                        to="/swap"
+                      />
+                    </NavLink>
+                  </Grid>
+                  <Grid item xs={ 2 } align="center">
+                    <NavLink to="/staking">
+                      <LokiButton
+                        label="Staking"
+                        to="/staking"
+                      />
+                    </NavLink>
+                  </Grid>
+                </Grid>
+                {this.renderTitleImage()}
                 <Switch>
                   <Route exact strict path="/swap" component={SwapWrapper} />
                   <Route exact strict path="/tos" component={ToS} />
