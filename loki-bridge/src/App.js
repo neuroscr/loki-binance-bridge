@@ -126,35 +126,36 @@ export default class App extends PureComponent {
                 <p></p>
                 <p></p>
                 <Grid
+                  id="grid"
                   container
                   justify="center"
                   alignItems="center"
                 >
-                  <Grid item xs={ 2 } align="center">
+                  <Grid item align="center">
                     <NavLink to="/about"><LokiButton label="About wLoki" />
                   </NavLink>
                   </Grid>
-                  <Grid item xs={ 2 } align="center">
+                  <Grid item align="center">
                     <NavLink to="/swap">
                       <LokiButton label="Swap wLoki" />
                     </NavLink>
                   </Grid>
-                  <Grid item xs={ 2 } align="center">
+                  <Grid item align="center">
                     <NavLink to="/staking">
                       <LokiButton label="Liquidity Mining" />
                     </NavLink>
                   </Grid>
-                  <Grid item xs={ 2 } align="center">
+                  <Grid item align="center">
                     <a target="_blank" href="https://ropsten.etherscan.io/address/0x1c37da7b6d7b428e8ac27187b0f8ebb9461d993a">
                       <LokiButton label="Ethereum Contract" />
                     </a>
                   </Grid>
-                  <Grid item xs={ 2 } align="center">
+                  <Grid item align="center">
                     <a target="_blank" href="https://loki.network">
                       <LokiButton label="Loki Wallet" />
                     </a>
                   </Grid>
-                  <Grid item xs={ 2 } align="center">
+                  <Grid item align="center">
                     <a target="_blank" href="https://app.uniswap.org/#/swap">
                       <LokiButton label="wLoki Uniswap" />
                     </a>
