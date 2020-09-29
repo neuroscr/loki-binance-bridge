@@ -39,10 +39,13 @@ const theme =  {
   palette: {
     type: 'dark',
     primary: {
-      main: colors.lokiGreen
+      main: colors.chainflipCyan
     },
     secondary: {
       main: colors.lightBlack
+    },
+    navigation: {
+      main: colors.chainflipMagenta
     },
     background:{
       paper: colors.lokiBlack80,
@@ -50,7 +53,7 @@ const theme =  {
     },
     text: {
       primary: colors.gray,
-      secondary: colors.lokiGreen
+      secondary: colors.chainflipCyan
     }
   }
 };
