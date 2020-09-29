@@ -23,19 +23,7 @@ import Web3Status from '../Web3Status'
 //import VersionSwitch from './VersionSwitch'
 
 const HeaderFrame = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
-  width: 100%;
-  top: 0;
-  position: absolute;
   z-index: 2;
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    padding: 12px 0 0 0;
-    width: calc(100%);
-    position: relative;
-  `};
 `
 
 const HeaderElement = styled.div`
@@ -73,13 +61,13 @@ const TitleText = styled(Row)`
 */
 
 const AccountElement = styled.div<{ active: boolean }>`
+  flex: 1;
   display: flex;
   flex-direction: row;
   align-items: center;
   background-color: ${({ theme, active }) => (!active ? theme.bg1 : theme.bg3)};
   border-radius: 12px;
   white-space: nowrap;
-  width: 100%;
 
   :focus {
     border: 1px solid blue;
@@ -89,7 +77,6 @@ const AccountElement = styled.div<{ active: boolean }>`
 const TestnetWrapper = styled.div`
   white-space: nowrap;
   width: fit-content;
-  margin-left: 10px;
   pointer-events: auto;
 `
 
@@ -160,30 +147,20 @@ export default function Header() {
 
 
   return (
-    <HeaderFrame>
-      <RowBetween style={{ alignItems: 'flex-start' }} padding="1rem 1rem 0 1rem">
-        <HeaderElement>
-        </HeaderElement>
-        <HeaderControls>
-          <HeaderElement>
-            <TestnetWrapper>
-              {!isMobile && chainId && NETWORK_LABELS[chainId] && <NetworkCard>{NETWORK_LABELS[chainId]}</NetworkCard>}
-            </TestnetWrapper>
-            <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
-              {account && userEthBalance ? (
-                <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
-                  {userEthBalance?.toSignificant(4)} ETH
-                </BalanceText>
-              ) : null}
-              <Web3Status />
-            </AccountElement>
-          </HeaderElement>
-        </HeaderControls>
-        <HeaderElementWrap>
-        </HeaderElementWrap>
-      </RowBetween>
-    </HeaderFrame>
-  )
+    <>
+      <TestnetWrapper>
+        {!isMobile && chainId && NETWORK_LABELS[chainId] && <NetworkCard>{NETWORK_LABELS[chainId]}</NetworkCard>}
+      </TestnetWrapper>
+      <AccountElement active={!!account} style={{ pointerEvents: 'auto' }} className="account-wrapper">
+        {account && userEthBalance ? (
+          <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={500}>
+            {userEthBalance?.toSignificant(4)} ETH
+          </BalanceText>
+        ) : null}
+        <Web3Status />
+      </AccountElement>
+    </>
+  );
 }
 /*
           <HeaderElementWrap>

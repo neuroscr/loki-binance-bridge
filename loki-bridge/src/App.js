@@ -120,13 +120,13 @@ export default class App extends PureComponent {
           <MuiThemeProvider theme={ createMuiTheme(theme) }>
             <CssBaseline />
             {this.renderBackgroundImage()}
-            <Web3ReactManager>
+             <Web3ReactManager>
               <div id="content" style={{background: "rgba(0,0,0,0.7)" }}>
                 <p></p>
                 <p></p>
                 <p></p>
                 <Grid
-                  id="grid"
+                  id="links grid"
                   container
                   justify="center"
                   alignItems="center"
