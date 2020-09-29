@@ -19,9 +19,15 @@ class Staking extends Component {
     alignItems="center"
   >
     <Grid item md={8}>
-      <Typography>
-<h2>wLoki</h2>
+      <h2>wLoki</h2>
+    </Grid>
+  </Grid>
+</div>
+    );
+  };
+}
 
+/*
 <p>Earn wLoki by providing liquidity to the wLoki-USDT Uniswap pool</p>
 
 <h2>Rewards</h2>
@@ -53,13 +59,6 @@ class Staking extends Component {
     <td></td>
   </tr>
 </table>
-
-      </Typography>
-    </Grid>
-  </Grid>
-</div>
-    );
-  };
-}
+*/
 
 export default Staking;
