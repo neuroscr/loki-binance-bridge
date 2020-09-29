@@ -81,14 +81,12 @@ code {
 }
 
 #grid {
-  flex: 1;
   padding: 8px;
 }
 
 .header-wrapper {
   display: flex;
   flex-direction: row;
-  flex: 1;
   justify-content: space-around;
   padding: 8px;
   align-items: center;
