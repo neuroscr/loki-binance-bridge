@@ -131,37 +131,49 @@ export default class App extends PureComponent {
                   alignItems="center"
                 >
                   <Grid item xs={ 2 } align="center">
-                    <NavLink to="/"><LokiButton
-                      label="About"
-                      to="/"
-                    /></NavLink>
+                    <NavLink to="/about"><LokiButton label="About wLoki" />
+                  </NavLink>
                   </Grid>
                   <Grid item xs={ 2 } align="center">
                     <NavLink to="/swap">
-                      <LokiButton
-                        label="Swap"
-                        to="/swap"
-                      />
+                      <LokiButton label="Swap wLoki" />
                     </NavLink>
                   </Grid>
                   <Grid item xs={ 2 } align="center">
                     <NavLink to="/staking">
-                      <LokiButton
-                        label="Staking"
-                        to="/staking"
-                      />
+                      <LokiButton label="Liquidity Mining" />
                     </NavLink>
+                  </Grid>
+                  <Grid item xs={ 2 } align="center">
+                    <a target="_blank" href="https://ropsten.etherscan.io/address/0x1c37da7b6d7b428e8ac27187b0f8ebb9461d993a">
+                      <LokiButton label="Ethereum Contract" />
+                    </a>
+                  </Grid>
+                  <Grid item xs={ 2 } align="center">
+                    <a target="_blank" href="https://loki.network">
+                      <LokiButton label="Loki Wallet" />
+                    </a>
+                  </Grid>
+                  <Grid item xs={ 2 } align="center">
+                    <a target="_blank" href="https://app.uniswap.org/#/swap">
+                      <LokiButton label="wLoki Uniswap" />
+                    </a>
                   </Grid>
                 </Grid>
                 {this.renderTitleImage()}
                 <Switch>
                   <Route exact strict path="/swap" component={SwapWrapper} />
+                  <Route exact strict path="/about" component={About} />
                   <Route exact strict path="/tos" component={ToS} />
                   <Route exact strict path="/staking" component={Staking} />
-                  <Route component={About} />
+                  <Route component={SwapWrapper} />
                 </Switch>
-                <Link to="/tos" class="tosLink">terms of service</Link>
-                Copyright 2020 Alchemy Luxe
+                <NavLink to="/tos">
+                  <LokiButton
+                    label="terms of service"
+                  />
+                </NavLink>
+                <p></p>
               </div>
             </Web3ReactManager>
 
