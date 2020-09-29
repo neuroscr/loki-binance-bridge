@@ -1,5 +1,7 @@
 export default {
-  lokiGreen: '#47eabb',
+  lokiGreen: '#5BCA5B',
+  chainflipCyan: '#47eabb',
+  chainflipMagenta: '#db58c0',
   lokiBlack90: '#0A0A0A',
   lokiBlack80: '#252525',
   lokiBlack60: '#313131',
