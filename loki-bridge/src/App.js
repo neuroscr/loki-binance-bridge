@@ -121,7 +121,8 @@ export default class App extends PureComponent {
             <CssBaseline />
             {this.renderBackgroundImage()}
             <Web3ReactManager>
-              <div id="content">
+              <div id="content" style={{background: "rgba(0,0,0,0.7)" }}>
+                <p></p>
                 <p></p>
                 <p></p>
                 <Grid
@@ -159,7 +160,7 @@ export default class App extends PureComponent {
                   <Route exact strict path="/staking" component={Staking} />
                   <Route component={About} />
                 </Switch>
-                <Link to="/tos">terms of service</Link>
+                <Link to="/tos" class="tosLink">terms of service</Link>
                 Copyright 2020 Alchemy Luxe
               </div>
             </Web3ReactManager>
