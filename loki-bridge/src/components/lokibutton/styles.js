@@ -2,17 +2,18 @@ const styles = theme => ({
   root: {
     position: 'relative',
   },
-  // label: {
+  label: {
+    "vertical-align": 'middle',
   //   "font-size": '0.825rem',
-  // },
+  },
   button: {
     minWidth: '100px',
     //fontWeight: 700,
-    display: 'inline-block',
+    //display: 'inline-block',
     fontWeight: 700, // 400
     //border: `1px solid ${theme.palette.primary.main}`,
     transition: 'all 0.2s ease-in-out',
-    padding: '0.8rem 2.5rem',
+    padding: '1.25rem 2.5rem',
     letterSpacing: '0.03em',
     fontSize: '0.8rem',
     '&:hover': {
