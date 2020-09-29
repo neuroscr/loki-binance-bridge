@@ -10,7 +10,7 @@ const styles = theme => ({
     //fontWeight: 700,
     display: 'inline-block',
     fontWeight: 400,
-    border: `1px solid ${theme.palette.primary.main}`,
+    //border: `1px solid ${theme.palette.primary.main}`,
     transition: 'all 0.2s ease-in-out',
     //padding: '0.8rem 2.5rem',
     //letterSpacing: '0.03em',
@@ -34,7 +34,7 @@ const styles = theme => ({
     }
   },
   secondary: {
-    border: `1px solid ${theme.palette.secondary.main}`,
+    //border: `1px solid ${theme.palette.secondary.main}`,
     '&:hover': {
       backgroundColor: theme.palette.secondary.main,
     }
