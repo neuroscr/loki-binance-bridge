@@ -283,6 +283,7 @@ class SwapInfo extends PureComponent {
         {this.renderDepositInstructions()}
         { swapType === SWAP_TYPE.LOKI_TO_WLOKI && (
           <Typography className={ classes.instructions }>
+              There will be a processing fee of {lokiFee} LOKI which will be charged when processing all your pending swaps.
             <b>Note:</b> You will have to wait for there to be atleast {lokiConfirmations} confirmations before your added to our processing queue.
           </Typography>
         )}
