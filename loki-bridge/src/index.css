@@ -109,10 +109,6 @@ code {
   }
 }
 
-.tosLink {
-  color: #5BCA5B;
-}
-
 @font-face {
     font-family: 'roboto-black';
     src: url('/fonts/roboto-black-webfont.woff2') format('woff2'),
