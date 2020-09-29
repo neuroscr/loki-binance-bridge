@@ -1,5 +1,5 @@
 export default {
-  lokiGreen: '#5BCA5B',
+  lokiGreen: '#47eabb',
   lokiBlack90: '#0A0A0A',
   lokiBlack80: '#252525',
   lokiBlack60: '#313131',
