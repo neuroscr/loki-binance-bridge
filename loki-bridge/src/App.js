@@ -91,7 +91,7 @@ export default class App extends PureComponent {
     return (
       <div id="background">
         <LazyLoad height={'100%'}>
-          <ImageLoader className="backgroundImage" loadedClassName="backgroundImageLoaded" src="/images/chainflip_bg.png" alt="Background" />
+          <ImageLoader className="backgroundImage" loadedClassName="backgroundImageLoaded" src="/images/chainflipbg.png" alt="Background" />
         </LazyLoad>
       </div>
     );
@@ -147,17 +147,17 @@ export default class App extends PureComponent {
                   </Grid>
                   <Grid item align="center">
                     <a target="_blank" href="https://ropsten.etherscan.io/address/0x1c37da7b6d7b428e8ac27187b0f8ebb9461d993a">
-                      <LokiButton label="Ethereum Contract" />
+                      <LokiButton label="Ethereum Contract 🔗" />
                     </a>
                   </Grid>
                   <Grid item align="center">
                     <a target="_blank" href="https://loki.network">
-                      <LokiButton label="Loki Wallet" />
+                      <LokiButton label="Loki Wallet 🔗" />
                     </a>
                   </Grid>
                   <Grid item align="center">
                     <a target="_blank" href="https://app.uniswap.org/#/swap">
-                      <LokiButton label="wLoki Uniswap" />
+                      <LokiButton label="wLoki Uniswap 🔗" />
                     </a>
                   </Grid>
                 </Grid>
@@ -169,6 +169,7 @@ export default class App extends PureComponent {
                   <Route exact strict path="/staking" component={Staking} />
                   <Route component={SwapWrapper} />
                 </Switch>
+                <a target="_blank" href="https://chainflip.io/"><img src="images/Poweredby.svg" height="32" /></a>
                 <NavLink to="/tos">
                   <LokiButton
                     label="terms of service"
