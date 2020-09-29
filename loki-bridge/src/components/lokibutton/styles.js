@@ -17,7 +17,7 @@ const styles = theme => ({
     letterSpacing: '0.03em',
     fontSize: '0.8rem',
     '&:hover': {
-      backgroundColor: theme.palette.primary.main, // -webkit-linear-gradient(45deg, #DB58C0, #47EABB)
+      backgroundColor: theme.palette.navigation.main, // -webkit-linear-gradient(45deg, #DB58C0, #47EABB)
       color: 'white',
       outline: '0'
     },
