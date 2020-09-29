@@ -21,7 +21,6 @@ function StyledButton(props) {
       <Button
         className={clxs(classes.button, secondary && classes.secondary)}
         fullWidth={ fullWidth }
-        variant="outlined"
         color={ secondary ? 'secondary' : 'primary'}
         disabled={disabled || loading}
         onClick={ onClick }>
