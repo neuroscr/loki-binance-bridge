@@ -101,7 +101,7 @@ export default class App extends PureComponent {
     return (
       <Box display="flex" justifyContent="center" className="title">
         <LazyLoad height={'120px'} className="titleContainer">
-          <ImageLoader className="titleImage" loadedClassName="titleImageLoaded" src="/images/WLOKI_white.svg" alt="Logo" />
+          <ImageLoader className="titleImage" loadedClassName="titleImageLoaded" src="/images/WLOKI_white.svg" alt="Logo" width="330" height="100" />
         </LazyLoad>
       </Box>
     );
