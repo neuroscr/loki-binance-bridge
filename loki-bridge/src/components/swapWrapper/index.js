@@ -5,12 +5,6 @@ import LazyLoad from 'react-lazy-load';
 import { Header, Snackbar, ImageLoader, Swap } from 'components';
 import styled from 'styled-components'
 
-const HeaderWrapper = styled.div`
-  ${({ theme }) => theme.flexRowNoWrap}
-  width: 100%;
-  justify-content: space-between;
-`
-
 class SwapWrapper extends Component {
   state = {
     snackbar: {
@@ -58,10 +52,10 @@ class SwapWrapper extends Component {
     const { page} = this.state;
 
     return (
-      <div>
-        <HeaderWrapper>
+      <>
+        <div class="header-wrapper">
           <Header />
-        </HeaderWrapper>
+        </div>
         <Grid
           id="grid"
           container
@@ -73,7 +67,7 @@ class SwapWrapper extends Component {
             { this.renderSnackbar() }
           </Grid>
         </Grid>
-      </div>
+      </>
     );
   };
 }
