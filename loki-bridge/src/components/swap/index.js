@@ -70,10 +70,13 @@ class Swap extends Component {
     setImmediate(() => this.getSwaps());
   }
 
-  onTokenSwapFinalized = (transactions) => {
+  onTokenSwapFinalized = (result) => {
     this.setState({ loading: false });
-    const message = transactions.length === 1 ? 'Added 1 new swap' : `Added ${transactions.length} new swaps`;
-    this.props.showMessage(message, 'success');
+    if (result.inserted > 0) {
+      const message = result.inserted === 1 ? 'Added 1 new swap' : `Added ${result.inserted} new swaps`;
+      this.props.showMessage(message, 'success');
+    }
+
 
     setImmediate(() => this.getUnconfirmedTransactions());
     setImmediate(() => this.getSwaps());
