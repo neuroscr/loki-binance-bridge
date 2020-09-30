@@ -19,6 +19,7 @@ class ToS extends Component {
     alignItems="center"
   >
     <Grid item md={8}>
+      <div className="readable">
 <h2>The Platform</h2>
 <p>1. The website wLoki Bridge, and any related mobile applications, (collectively "Platform") is owned, operated and controlled by Alchemy Luxe of Flat B, 8/F, Blk 6, Villa Carlton, 369 Tai Po Road, Kowloon, Hong Kong, trading as wLoki Bridge, who along with its associated entities, and each of their directors, affiliates or employees (as appropriate) are referred to as “we”, “us” or “our” in these Terms of Use.</p>
 <p>2. The Platform provided and operated by wLoki Bridge allows users to deposit particular digital currencies and directly swap them for an equivalent on an alternate blockchain. “wLoki Bridge” may also refer to the services, website, mobile applications, content, products or any other services provided by wLoki Bridge (collectively “Services”).</p>
@@ -135,6 +136,7 @@ class ToS extends Component {
 <p>56. If any provision of the Terms of Use are held to be invalid, unenforceable or illegal for any reason, the remaining parts of the Terms of Use will be in full force and effect.</p>
 <p>57. If we are unable to perform our Services as stipulated in the Terms of Use due to circumstances out of our control, including but not limited to, change of law, regulations or policy, or an event of Force Majeure, we will not be held liable.</p>
 <p>58. These Terms of Use are governed by the laws of Hong Kong and in the event that we have a legal dispute relating to this Platform or these Website Terms and Conditions, the Courts of Singapore will have non-exclusive jurisdiction.</p>
+      </div>
     </Grid>
   </Grid>
 </div>
