@@ -31,7 +31,7 @@ class Swap extends Component {
     store.on(Events.ERROR, this.onError);
     store.on(Events.FETCHED_INFO, this.onInfoUpdated);
     store.on(Events.FETCHED_SWAPS, this.onSwapsFetched);
-    store.on(Events.FETCHED_UNCONFIRMED_LOKI_TXS, this.onUnconfirmedTransactionsFetched);
+    store.on(Events.FETCHED_UNCONFIRMED_TXS, this.onUnconfirmedTransactionsFetched);
     store.on(Events.TOKEN_SWAPPED, this.onTokenSwapped);
     store.on(Events.TOKEN_SWAP_FINALIZED, this.onTokenSwapFinalized);
   }
@@ -44,7 +44,7 @@ class Swap extends Component {
     store.removeListener(Events.ERROR, this.onError);
     store.removeListener(Events.FETCHED_INFO, this.onInfoUpdated);
     store.removeListener(Events.FETCHED_SWAPS, this.onSwapsFetched);
-    store.removeListener(Events.FETCHED_UNCONFIRMED_LOKI_TXS, this.onUnconfirmedTransactionsFetched);
+    store.removeListener(Events.FETCHED_UNCONFIRMED_TXS, this.onUnconfirmedTransactionsFetched);
     store.removeListener(Events.TOKEN_SWAPPED, this.onTokenSwapped);
     store.removeListener(Events.TOKEN_SWAP_FINALIZED, this.onTokenSwapFinalized);
   }
@@ -115,7 +115,7 @@ class Swap extends Component {
     const { swapType, swapInfo } = this.state;
     if (swapType !== SWAP_TYPE.LOKI_TO_WLOKI) return;
     dispatcher.dispatch({
-      type: Actions.GET_UNCONFIRMED_LOKI_TXS,
+      type: Actions.GET_UNCONFIRMED_TXS,
       content: {
         uuid: swapInfo.uuid
       }
@@ -188,10 +188,9 @@ class Swap extends Component {
     const { classes } = this.props;
     const { swaps, unconfirmed, swapType } = this.state;
 
-    const unconfirmedTxs = swapType === SWAP_TYPE.LOKI_TO_WLOKI ? unconfirmed : [];
-    const unconfirmedSwaps = unconfirmedTxs.map(({ hash, amount, created }) => ({
+    const unconfirmedSwaps = unconfirmed.map(({ hash, amount, created }) => ({
       uuid: hash,
-      type: SWAP_TYPE.LOKI_TO_WLOKI,
+      type: swapType,
       amount,
       txHash: hash,
       transferTxHashes: [],
