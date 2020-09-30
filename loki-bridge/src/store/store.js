@@ -12,7 +12,7 @@ const { apiUrl, useAPIEncryption } = config;
 const httpClient = axios.create({ baseURL: apiUrl });
 const endpoints = {
   getInfo: '/api/v1/getInfo',
-  getUncomfirmedTransactions: '/api/v1/getUncomfirmedTransactions',
+  getUnconfirmedTransactions: '/api/v1/getUnconfirmedTransactions',
   getSwaps: '/api/v1/getSwaps',
   swap: '/api/v1/swap',
   finalizeSwap: '/api/v1/refresh',
@@ -63,7 +63,7 @@ class Store extends EventEmitter {
 
   async getUnconfirmedTransactions(payload) {
     try {
-      const data = await this.fetch(endpoints.getUncomfirmedTransactions, 'GET', payload.content);
+      const data = await this.fetch(endpoints.getUnconfirmedTransactions, 'GET', payload.content);
       this.emit(Events.FETCHED_UNCONFIRMED_TXS, data.result);
     } catch (e) {
       this.emit(Events.ERROR, e);
