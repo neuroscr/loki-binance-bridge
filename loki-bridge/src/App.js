@@ -151,7 +151,7 @@ export default class App extends PureComponent {
                     </a>
                   </Grid>
                   <Grid item align="center">
-                    <a target="_blank" href="https://loki.network">
+                    <a target="_blank" href="https://loki.network/getstarted/#wallet">
                       <LokiButton label="Loki Wallet 🔗" />
                     </a>
                   </Grid>
