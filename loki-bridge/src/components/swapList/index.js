@@ -56,48 +56,59 @@ class SwapList extends Component {
   renderTime = (created) => {
     const { classes } = this.props;
     const now = Date.now();
-    const timestamp = Date.parse(created);
-    const diff = Math.abs(now - timestamp);
+    const diff = Math.abs(now - created);
     const dayMs = 24 * 60 * 60 * 1000;
 
     const showFullDate = diff > dayMs;
     if (showFullDate) {
-      const formatted = dateformat(timestamp, 'dd/mm/yyyy');
+      const formatted = dateformat(created, 'dd/mm/yyyy');
       return (
         <Typography className={classes.time}>{formatted}</Typography>
       );
     }
 
-    return <TimeAgo className={classes.time} datetime={timestamp} />;
+    return <TimeAgo className={classes.time} datetime={created} />;
   }
 
-  renderSwapItem = ({ uuid, type, amount, txHash, transferTxHashes, created, unconfirmed }) => {
+  renderSwapItem = ({ uuid, type, amount, txHash, transferTxHashes, created, unconfirmed, lokiFee }) => {
     const { classes } = this.props;
 
     const isPending = transferTxHashes && transferTxHashes.length === 0;
     const depositCurrency = type === SWAP_TYPE.LOKI_TO_WLOKI ? 'LOKI' : 'WLOKI';
-    const displayAmount = amount / 1e9;
+    const fee = (lokiFee || 0) / 1e9;
+    const displayAmount = (amount / 1e9) - fee;
 
     let status = 'Completed';
     if (isPending) {
       status = unconfirmed ? 'Waiting for Confirmations' : 'Pending';
     }
 
+    const feeStatus = fee > 0 ? `(${fee} Fee)` : '';
+
     return (
       <Grid item xs={12} key={uuid}>
         <Box className={classes.item}>
-          <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between">
-            <Typography className={classes.amount}>{displayAmount} {depositCurrency}</Typography>
+          <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Typography className={classes.amount}>
+              {displayAmount} {depositCurrency} {feeStatus}
+            </Typography>
             <Box display="flex" flexDirection="row" alignItems="center">
-              <Typography className={isPending ? classes.pending : classes.completed}>
+              <Typography
+                className={isPending ? classes.pending : classes.completed}
+              >
                 {status}
               </Typography>
               <Typography className={classes.timeSeperator}> • </Typography>
-              { this.renderTime(created) }
+              {this.renderTime(created)}
             </Box>
           </Box>
           <Divider variant="middle" className={classes.divider} />
-          { this.renderHash(type, txHash, transferTxHashes) }
+          {this.renderHash(type, txHash, transferTxHashes)}
         </Box>
       </Grid>
     );

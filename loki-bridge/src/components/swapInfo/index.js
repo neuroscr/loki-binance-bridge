@@ -9,6 +9,7 @@ import { LokiButton, QRIcon, Input } from 'components';
 import { SWAP_TYPE } from 'utils/constants.js';
 import styles from './styles';
 import Web3 from 'web3';
+import { TYPE } from '../../utils/constants';
 
 const contractAddress = '0x1c37da7b6d7b428e8ac27187b0f8ebb9461d993a'
 
@@ -271,9 +272,10 @@ class SwapInfo extends PureComponent {
   renderInstructions = () => {
     const { swapType, classes, info } = this.props;
 
-    const lokiFee = (info && info.fees && info.fees.loki / 1e9) || 0;
-    let lokiConfirmations = (info && info.minLokiConfirmations);
-    if (typeof lokiConfirmations != 'number') { lokiConfirmations = '-'; }
+    const receivingCurrency =
+      swapType === SWAP_TYPE.LOKI_TO_WLOKI ? TYPE.WLOKI : TYPE.LOKI;
+    const lokiFee =
+      (info && info.fees && (info.fees[receivingCurrency] || 0) / 1e9) || 0;
 
     return (
       <Box className={classes.instructionContainer}>
@@ -281,39 +283,13 @@ class SwapInfo extends PureComponent {
             Here's what you need to do next:
         </Typography>
         {this.renderDepositInstructions()}
-        { swapType === SWAP_TYPE.LOKI_TO_WLOKI && (
-          <Typography className={ classes.instructions }>
-              There will be a processing fee of {lokiFee} LOKI which will be charged when processing all your pending swaps.
-            <b>Note:</b> You will have to wait for there to be atleast {lokiConfirmations} confirmations before your added to our processing queue.
-          </Typography>
-        )}
-        { swapType === SWAP_TYPE.WLOKI_TO_LOKI && (
-          <Typography className={ classes.instructionBold }>
-              There will be a processing fee of {lokiFee} LOKI which will be charged when processing all your pending swaps.
-          </Typography>
-        )}
+        <Typography className={ classes.instructions }>
+          There will be a processing fee of {lokiFee} LOKI which will be charged when processing all your pending swaps.
+        </Typography>
         <Typography className={ classes.instructions }>
             If you run into any trouble, or your swap request has not gone through, please contact us.
         </Typography>
       </Box>
-    );
-  }
-
-  renderReceivingAmount = () => {
-    const { classes, swapType, swapInfo } = this.props;
-    if (!swapInfo || !swapInfo.swaps || swapInfo.swaps.length === 0) return null;
-
-    const receivingCurrency = swapType === SWAP_TYPE.LOKI_TO_WLOKI ? 'WLOKI' : 'LOKI';
-
-    const pendingSwaps = swapInfo.swaps.filter(s => s.transferTxHashes && s.transferTxHashes.length === 0);
-    const total = pendingSwaps.reduce((total, swap) => total + parseFloat(swap.amount), 0);
-    const displayTotal = total / 1e9;
-
-    return (
-      <Grid item xs={ 12 } align='right' className={ classes.stats }>
-        <Typography className={classes.statTitle}>Pending Amount:</Typography>
-        <Typography className={classes.statAmount}>{displayTotal} {receivingCurrency}</Typography>
-      </Grid>
     );
   }
 
