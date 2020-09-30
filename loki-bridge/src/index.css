@@ -140,3 +140,7 @@ a {
     font-weight: normal;
     font-style: normal;
 }
+
+.readable {
+  max-width: 650px;
+}
