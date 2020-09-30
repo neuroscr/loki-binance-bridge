@@ -241,6 +241,7 @@ class SwapInfo extends PureComponent {
               fullWidth
               label="Send"
               loading={loading}
+              variant="outlined"
               onClick={this.onBurn}
             />
           </Box>
@@ -326,6 +327,7 @@ class SwapInfo extends PureComponent {
           <LokiButton
             fullWidth
             label="Refresh"
+            variant="outlined"
             loading={loading}
             onClick={onRefresh}
           />
