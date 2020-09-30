@@ -112,8 +112,7 @@ class Swap extends Component {
   }
 
   getUnconfirmedTransactions = () => {
-    const { swapType, swapInfo } = this.state;
-    if (swapType !== SWAP_TYPE.LOKI_TO_WLOKI) return;
+    const { swapInfo } = this.state;
     dispatcher.dispatch({
       type: Actions.GET_UNCONFIRMED_TXS,
       content: {
