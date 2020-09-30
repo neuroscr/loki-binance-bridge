@@ -13,17 +13,21 @@ function StyledButton(props) {
     onClick,
     disabled,
     secondary,
-    loading
+    loading,
+    variant
   } = props;
 
   return (
     <div className={classes.root}>
       <Button
-        className={clxs(classes.button, secondary && classes.secondary)}
+        className={clxs('loki-button', classes.button, secondary && classes.secondary)}
         fullWidth={ fullWidth }
         color={ secondary ? 'secondary' : 'primary'}
         disabled={disabled || loading}
-        onClick={ onClick }>
+        onClick={ onClick }
+        variant={ variant }
+        >
+
         {label}
       </Button>
       {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
@@ -40,6 +44,7 @@ StyledButton.propTypes = {
   disabled: PropTypes.bool,
   loading: PropTypes.bool,
   secondary: PropTypes.bool,
+  variant: PropTypes.string,
 };
 
 export default withStyles(styles)(StyledButton);
