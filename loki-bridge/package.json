@@ -85,8 +85,8 @@
   "scripts": {
     "start": "serve -s build",
     "dev": "REACT_APP_NETWORK_URL=https://mainnet.infura.io/v3/4bf032f2d38a4ed6bb975b80d6340847 node_modules/.bin/react-scripts start",
-    "build": "cra-alias build",
-    "test": "cra-alias test"
+    "build": "REACT_APP_NETWORK_URL=https://mainnet.infura.io/v3/4bf032f2d38a4ed6bb975b80d6340847 node_modules/.bin/react-scripts build",
+    "test": "REACT_APP_NETWORK_URL=https://mainnet.infura.io/v3/4bf032f2d38a4ed6bb975b80d6340847 node_modules/.bin/react-scripts test"
   },
   "eslintConfig": {
     "extends": "react-app"
