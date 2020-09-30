@@ -144,3 +144,7 @@ a {
 .readable {
   max-width: 650px;
 }
+
+.loki-button.MuiButton-outlinedPrimary {
+  border: 1px solid #db58c0 !important;
+}
