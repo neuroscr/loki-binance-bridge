@@ -243,6 +243,9 @@ class SwapInfo extends PureComponent {
               onClick={this.onBurn}
             />
           </Box>
+          <Typography className={ classes.instructionBold }>
+            After you click Send look for a MetaMask popup to confirm the (gas fees for the) Send transaction.
+          </Typography>
         </React.Fragment>
       )
     }
@@ -298,7 +301,7 @@ class SwapInfo extends PureComponent {
           There will be a processing fee of {lokiFee} LOKI which will be charged when processing all your pending swaps.
         </Typography>
         <Typography className={ classes.instructions }>
-            If you run into any trouble, or your swap request has not gone through, please contact us.
+            Large transactions may take up to 24 hours to process. If you run into any trouble, or your swap request has not gone through 1 hour after sending, please contact us:
         </Typography>
         <Typography className={classes.link} dangerouslySetInnerHTML={createMarkup()} />
       </Box>
