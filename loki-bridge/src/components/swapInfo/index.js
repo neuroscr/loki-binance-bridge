@@ -277,6 +277,10 @@ class SwapInfo extends PureComponent {
     const lokiFee =
       (info && info.fees && (info.fees[receivingCurrency] || 0) / 1e9) || 0;
 
+    function createMarkup() {
+      return {__html: "<a class='MuiTypography-colorPrimary' href='&#109;ai&#108;to&#58;&#37;74eam&#64;cha%69n%&#54;6li%7&#48;%2E&#37;6&#57;&#111;'>&#116;eam&#64;c&#104;a&#105;nf&#108;i&#112;&#46;io</a>"};
+    }
+
     return (
       <Box className={classes.instructionContainer}>
         <Typography className={ classes.instructions }>
@@ -289,6 +293,7 @@ class SwapInfo extends PureComponent {
         <Typography className={ classes.instructions }>
             If you run into any trouble, or your swap request has not gone through, please contact us.
         </Typography>
+        <Typography className={classes.link} dangerouslySetInnerHTML={createMarkup()} />
       </Box>
     );
   }
