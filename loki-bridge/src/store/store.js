@@ -98,18 +98,12 @@ class Store extends EventEmitter {
   }
 
   async fetch(url, method, params = null) {
-    // Encrypt the params if necessary
-    let encrypted = params;
-    if (useAPIEncryption && method.toLowerCase() === 'post') {
-      encrypted = encrypt(params, url);
-    }
-
     const field = method.toLowerCase() === 'post' ? 'data' : 'params';
     try {
       const { data } = await httpClient({
         method,
         url,
-        [field]: encrypted
+        [field]: params
       });
 
       if (data.status === 200 && !data.success) {

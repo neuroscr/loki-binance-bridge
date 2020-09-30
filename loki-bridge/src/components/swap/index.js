@@ -7,6 +7,7 @@ import { store, dispatcher, Actions, Events } from 'store';
 import { SWAP_TYPE, TYPE } from 'utils/constants.js';
 import { SwapSelection, SwapInfo, SwapList } from 'components';
 import styles from './styles';
+import { throttle } from 'lodash';
 
 const currencySymbols = {
   [TYPE.LOKI]: 'LOKI',
@@ -147,7 +148,7 @@ class Swap extends Component {
   onRefresh = () => {
     this.getUnconfirmedTransactions();
     this.getSwaps();
-    this.finalizeSwap();
+    throttle(() => this.finalizeSwap(), 1 * 60 * 1000); // Throttle full refresh to every 1 minute
   }
 
   finalizeSwap = () => {
