@@ -55,7 +55,7 @@ class SwapList extends Component {
 
   renderTime = (created) => {
     const { classes } = this.props;
-    const timestamp = created * 1000;
+    const timestamp = (created * 1000) || Date.now();
     const now = Date.now();
     const diff = Math.abs(now - timestamp);
     const dayMs = 24 * 60 * 60 * 1000;
