@@ -53,7 +53,7 @@ class SwapWrapper extends Component {
 
     return (
       <>
-        <div class="header-wrapper">
+        <div className="header-wrapper">
           <Header />
         </div>
         <Grid
