@@ -141,6 +141,7 @@ class SwapSelection extends Component {
           <LokiButton
             fullWidth
             label="Next"
+            variant="outlined"
             loading={loading}
             onClick={this.onNext}
           />
