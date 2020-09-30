@@ -55,19 +55,20 @@ class SwapList extends Component {
 
   renderTime = (created) => {
     const { classes } = this.props;
+    const timestamp = created * 1000;
     const now = Date.now();
-    const diff = Math.abs(now - created);
+    const diff = Math.abs(now - timestamp);
     const dayMs = 24 * 60 * 60 * 1000;
 
     const showFullDate = diff > dayMs;
     if (showFullDate) {
-      const formatted = dateformat(created, 'dd/mm/yyyy');
+      const formatted = dateformat(timestamp, 'dd/mm/yyyy');
       return (
         <Typography className={classes.time}>{formatted}</Typography>
       );
     }
 
-    return <TimeAgo className={classes.time} datetime={created} />;
+    return <TimeAgo className={classes.time} datetime={timestamp} />;
   }
 
   renderSwapItem = ({ uuid, type, amount, txHash, transferTxHashes, created, unconfirmed, lokiFee }) => {
