@@ -194,8 +194,15 @@ class SwapInfo extends PureComponent {
   }
 
   onAmountChange = (event) => {
-    let value = Number(event.target.value)
-    if (isNaN(value)) return
+    let value = +Number(event.target.value).toFixed(9)
+    // skip NaN check when containing a start/end with .
+    if (event.target.value.match(/^\.|\.$/)) {
+      value = event.target.value
+    } else {
+      if (isNaN(value)) {
+        return
+      }
+    }
     // allow numbers
     this.setState({
       amount: '' + value, // convert back to string because Input requires string
